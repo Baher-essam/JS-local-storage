@@ -1,82 +1,100 @@
 
 
-var productNameInp = document.getElementById("productName");
-var productPriceInp = document.getElementById("productPrice");
-var productCompanyInp = document.getElementById("productCompany");
-var productDescriptionInp = document.getElementById("productDescription");
-var addBtn = document.getElementById("addBtn");
-var prodcutContainer;
+var productNameInp= document.getElementById("prodcutName");
+var productPriceInp= document.getElementById("prodcutPrice");
+var productCompanyInp= document.getElementById("prodcutCompany");
+var productDescInp= document.getElementById("prodcutDesc");
+var btn = document.getElementById("btn");
+var searchInp = document.getElementById("searchInp");
 
-if (localStorage.getItem("prodcutContainer") == null)
-    {
-        prodcutContainer = []; 
-    }
-    else
-    {
-        prodcutContainer = JSON.parse(localStorage.getItem("prodcutContainer"));
-        displayData();
-    }
+var productsContainer;
 
-
-addBtn.onclick = function()
+if (localStorage.getItem("productsContainer") == null)
 {
-    addProdcut()
+    productsContainer = [];
 }
-
-function addProdcut()
+else
 {
-    var prodcut =
-    {
-        name: productNameInp.value,
-        price:productPriceInp.value,
-        comapany: productCompanyInp.value,
-        description: productDescriptionInp.value
-    }
-    prodcutContainer.push(prodcut);
-    localStorage.setItem("prodcutContainer",JSON.stringify(prodcutContainer));
+    productsContainer = JSON.parse(localStorage.getItem("productsContainer"));
     displayData();
-    clearForm()
 }
 
-
-function displayData()
+//search for products
+searchInp.onkeyup = function()
 {
-    var cols = "";
-    for(var i=0 ; i<prodcutContainer.length;i++)
+    searchProducts(searchInp.value);
+}
+
+function searchProducts(term)
+{
+    for(var i=0 ; i< productsContainer.length ;i++)
     {
-       cols += '<div class="col-lg-3"><div class="prodcut"><h3>'+prodcutContainer[i].name+'</h3><p>'+prodcutContainer[i].comapany+'</p><p class="text-danger">'+prodcutContainer[i].price+'</p><p>'+prodcutContainer[i].description+'</p><button class="btn btn-danger" onclick="deleteProdcut('+i+')">delete</button></div></div>'
+        if(productsContainer[i].name == term)
+        {
+            console.log(productsContainer[i]);
+        } 
     }
-    document.getElementById("rowData").innerHTML=cols;
 }
 
 
-function deleteProdcut(id)
+btn.onclick = function()
 {   
-    prodcutContainer.splice(id,1);
-    localStorage.setItem("prodcutContainer",JSON.stringify(prodcutContainer));
-    displayData()
+    addProduct();
+    displayData();
+    clearForm();
 }
 
 
+
+function addProduct()
+{
+    var product = 
+    {
+        name :    productNameInp.value,
+        price :   productPriceInp.value,
+        company : productCompanyInp.value,
+        desc :    productDescInp.value
+    }
+
+    productsContainer.push(product);
+    localStorage.setItem("productsContainer",JSON.stringify(productsContainer))
+   
+}
+
+//adding products after click add btn
+function displayData() 
+{
+    var temp = "";
+    for (var i = 0 ; i <productsContainer.length ; i++)
+    {
+        temp+=` <div class="col-md-3">
+        <div class="prodcut">
+            <h3>`+productsContainer[i].name+`</h3>
+            <p>`+productsContainer[i].desc+`</p>
+            <p class="text-danger">`+productsContainer[i].company+`</p>
+            <p class="text-info">`+productsContainer[i].price+`</p>
+            <button id="delete" class="btn btn-danger" onclick="deleteProdcut(`+i+`)">delete</button>
+        </div>
+    </div>`;
+    }
+    document.getElementById("cols").innerHTML=temp;
+}
+
+//clear inputs after adding prodcuts
 function clearForm()
 {
-    var inputs = document.getElementsByClassName("form-control");
-
-    for (var i=0 ; i<inputs.length ; i++)
-    {
-        inputs[i].value ="";
-    }
+   var inputs = document.getElementsByClassName("form-control");   
+   for(var i = 0 ; i < inputs.length ; i++)
+   {
+       inputs[i].value ="";
+   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+//delete prodcut after adding it
+function deleteProdcut(id)
+{
+    //delete (itemID,item.no)
+    productsContainer.splice(id,1);
+    localStorage.setItem("productsContainer",JSON.stringify(productsContainer))
+    displayData();
+}
