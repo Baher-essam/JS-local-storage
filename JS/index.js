@@ -62,8 +62,10 @@ btn.onclick = function()
     {
         updateProduct();
         displayData();
+        clearForm();
     }
 }
+
 //adding product to local storge 
 function addProduct()
 {
@@ -109,6 +111,7 @@ function setForm(i)
     currentIndex = i;
 }
 
+//update product then add it to the local storge again
 function updateProduct()
 {
     productsContainer[currentIndex].name = productNameInp.value;
@@ -137,4 +140,3 @@ function deleteProdcut(id)
     localStorage.setItem("productsContainer",JSON.stringify(productsContainer))
     displayData();
 }
-//##
