@@ -29,12 +29,12 @@ searchInp.onkeyup = function()
 }
 
 //Products Container
-function searchProducts(term)
+function searchProducts(searchData)
 {
     var searchCols ="";
     for(var i=0 ; i< productsContainer.length ;i++)
     {  
-        if(productsContainer[i].name.includes(term))
+        if(productsContainer[i].name.includes(searchData))
         {
             searchCols+=`<div class="col-md-3">
             <div class="prodcut">
@@ -45,6 +45,10 @@ function searchProducts(term)
             </div>
         </div>`;
         }
+       /* else if(productsContainer[i].name != searchData)
+        {
+            searchCols+= ``;
+        }*/
     } 
     searchRow.innerHTML= searchCols;
 }
@@ -139,4 +143,6 @@ function deleteProdcut(id)
     productsContainer.splice(id,1);
     localStorage.setItem("productsContainer",JSON.stringify(productsContainer))
     displayData();
+    clearForm();
+    btn.innerHTML = "Add Product";
 }
