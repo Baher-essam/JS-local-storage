@@ -10,3 +10,19 @@ footer
 {
     border-top: solid 1px #38aac2;
 }
+
+
+
+
+@media only screen and (max-width: 575px) {
+    footer p {
+      text-align: center;
+    }
+  }
+
+
+@media only screen and (max-width: 370px) {
+    footer p {
+      text-align: center;
+    }
+  }
