@@ -6,3 +6,7 @@
 }
 body {font-family: 'segoe ui light';}
 .container-fluid {padding: 0; margin: 0;}
+footer
+{
+    border-top: solid 1px #38aac2;
+}
